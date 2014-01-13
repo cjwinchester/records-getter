@@ -1,4 +1,4 @@
-NE records request helper-outer thing
+NE records request generator
 ==============
 
 A tool to help Nebraskans file records requests.
