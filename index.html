@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+
+<head>
+
+<!--
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+-->
+
+<script src="web/libs/jquery.min.js"></script>
+
+</head>
+
+<body>
+
+<h1>Records request helper-outer</h1>
+
+<p>Some explanation here blah blah blah always do your research and check with people first to see if the records you seek are available w/ out a records request</p>
+
+<select id="subdivision">
+<option value=''>-- Select government --</option>
+<option value="Omaha">City of Omaha</option>
+<option value="Douglas">Douglas County</option>
+<option value="Sarpy">Sarpy County</option>
+<option value="Bellevue">Bellevue</option>
+<option value="Papillion">Papillion</option>
+<option value="La Vista">La Vista</option>
+<option value="Springfield">Springfield</option>
+<option value="Gretna">Gretna</option>
+<option value="OPPD">Omaha Public Power District</option>
+<option value="MUD">Metropolitan Utilities District</option>
+<option value="PMNRD">Papio-Missouri River Natural Resources District</option>
+<option value="OPS">Omaha Public Schools</option>
+<option value="Millard">Millard Public Schools</option>
+<option value="BPS">Bellevue Public Schools</option>
+<option value="PLVPS">Papillion-La Vista Public Schools</option>
+</select>
+
+<label for="name"><strong>Name</strong></label>
+<input type="text" id="name" placeholder="Your name ..." />
+
+<label for="records"><strong>Records</strong>
+<textarea id="records" rows="5" placeholder="Describe the records you're looking for."></textarea>
+
+<input type="button" value="Beer me" onclick="populate()" />
+<input type="button" value="Reset" onclick="reset()" />
+
+<p id="copier" style="display:none">Now you can <a href="#" onclick="selectText('grabtext')">copy</a> the text below.</p>
+
+<div id="grabtext"></div>
+
+<script>
+
+var data = [
+[ "Bellevue", "Dan Berlowitz", "City administrator", "555-555-5555", "address", "a@z.com" ],
+[ "Sarpy", "Fred Uhe", "Spokesman", "444-444-4444", "address", "a@z.com" ]
+]
+
+var len = data.length;
+var custodian, phone, title, address, email = ''
+
+var apmonths = ["Jan.", "Feb.", "March", "April", "May", "June", "July", "Aug.", "Sept.", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."]
+var today = new Date();
+var day = today.getDate();
+var year = today.getFullYear();
+
+function populate() {
+if 
+    ($('#subdivision').val() == '') {alert('Please select an agency.')} 
+else if 
+    ($('#records').val() == '') {alert('Please describe the records you\'re looking for.')}
+else if 
+    ($('#name').val() == '') {alert('Please enter your name.')}
+else {
+
+var getname = $('#name').val();
+var govt = $('#subdivision :selected').text();
+var govmatch = $('#subdivision :selected').val();
+var dt = document.getElementsByTagName("textarea")[0];
+
+for (i=0; i < len; i++) {
+if (data[i][0] == govmatch) {
+    custodian = data[i][1];
+    title = data[i][2];
+    phone = data[i][3];
+    address = data[i][4];
+    email = data[i][5];
+    }
+}
+
+request = '<p>' + dt.value.replace(/\n/g, '</p>\n\n<p>').replace(/\n\n<p><\/p>/g, '') + '</p>'
+
+$('#grabtext').html('<p>' + apmonths[today.getMonth()] + ' ' + day + ', ' + year + '</p><p>' + '<a href="mailto:' + email + '">' + custodian + "</a>" + '<br/>' + title + ', ' + govt + '<br/>' + address + '<br/>' + phone + "</p><p>Pursuant to <a href='' target='_blank'>Neb. Rev. Stat. blah blah blah</a>, I hereby request the following records:</p><p>" + request + '</p><p>Thank you,<br/>' + getname + '</p>')
+
+$('#copier').show();
+
+}
+
+}
+
+function selectText(element) {
+    var doc = document;
+    var text = doc.getElementById(element);    
+    if (doc.body.createTextRange) { 
+        var range = doc.body.createTextRange();
+        range.moveToElementText(text);
+        range.select();
+    } else if (window.getSelection) {
+        var selection = window.getSelection();            
+        var range = doc.createRange();
+        range.selectNodeContents(text);
+        selection.removeAllRanges();
+        selection.addRange(range);
+    }
+}
+
+function reset() {
+$('body').find('input:text, select, textarea').val('');
+$('#grabtext').html('');
+$('#copier').hide();
+}
+
+</script>
+
+</body>
+
+</html>
