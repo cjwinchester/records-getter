@@ -81,7 +81,7 @@ h1 { font-weight: bold; letter-spacing: -1px; }
 	
 	<div class="jumbotron rust">
     <div class="container">
-			<h1>Records blah blah</h1>
+			<h1>Nebraska records request generator</h1>
 			<p class="lead">Lead-in text here</p>
 	</div>
 	</div>
@@ -108,12 +108,13 @@ h1 { font-weight: bold; letter-spacing: -1px; }
 <option value="Millard">Millard Public Schools</option>
 <option value="BPS">Bellevue Public Schools</option>
 <option value="PLVPS">Papillion-La Vista Public Schools</option>
+<option value="NU">University of Nebraska</option>
 </select>
 
 </div>
 
 <div class="row spacer">
-<textarea id="records" class="form-control" rows="5" placeholder="Describe the records you're looking for."></textarea>
+<textarea id="records" class="form-control" rows="5" placeholder="Describe the records you're looking for. Be as specific as possible."></textarea>
 </div>
 
 <div class="row spacer">
@@ -171,7 +172,7 @@ if (govdata[i][0] == govmatch) {
 
 request = '<p>' + dt.value.replace(/\n/g, '</p>\n\n<p>').replace(/\n\n<p><\/p>/g, '') + '</p>'
 
-$('#grabtext').html('<p>' + apmonths[today.getMonth()] + ' ' + day + ', ' + year + '</p><p>' + '<a href="mailto:' + email + '">' + custodian + "</a>" + '<br/>' + title + ', ' + govt + '<br/>' + address + '<br/>' + phone + "</p><p>Pursuant to <a href='' target='_blank'>Neb. Rev. Stat. blah blah blah</a>, I hereby request the following records:</p><p>" + request + '</p><p>Thank you,<br/>' + getname + '</p>').fadeIn('slow')
+$('#grabtext').html('<p>' + apmonths[today.getMonth()] + ' ' + day + ', ' + year + '</p><p>' + custodian + '<br/>' + title + ', ' + govt + '<br/>' + address + '<br/>' + phone + "<br/>" + '<a href="mailto:' + email + '">' + email + "</a>" + "</p><p>Pursuant to <a href='http://uniweb.legislature.ne.gov/laws/statutes.php?statute=84-712' target='_blank'>Neb. Rev. Stat. 84-712 through 84-712.09</a>, I hereby request the following records:</p><p>" + request + '</p><p>Thank you,<br/>' + getname + '</p>').fadeIn('slow')
 
 $('#reseter').fadeIn('slow');
 $('#copier').fadeIn('slow');
