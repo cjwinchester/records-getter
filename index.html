@@ -26,8 +26,8 @@
     .navbar-inverse .navbar-brand { color: #ccc; }
 div.jumbotron.image { margin-top: 2.3em; margin-bottom: 0; padding: 0; overflow: hidden; }
 div.jumbotron p.lead { color: #ccc; }
-
 h1 { font-weight: bold; letter-spacing: -1px; }
+.spacer { margin-top:15px;}
 
     </style>
 
@@ -77,13 +77,7 @@ h1 { font-weight: bold; letter-spacing: -1px; }
 		<a class="navbar-right" href="http://omaha.com" target="_blank"><img class="logo" src="http://omaha.com/assets/images/OW5235817.PNG"></a>
         </div><!--/.nav-collapse -->
       </div>
-    </div>
-
-	<!-- header image -->
-	<div class="jumbotron image">
-		<img src="http://i.imgur.com/GlKM0EG.jpg?2" style="width: 100%;">		
-	</div>
-    
+    </div>    
 	
 	<div class="jumbotron rust">
     <div class="container">
@@ -95,8 +89,8 @@ h1 { font-weight: bold; letter-spacing: -1px; }
 
 <div class="container" style="margin-bottom: 50px;">
 
-<div class="row">
 <div class="col-md-6">
+<div class="row">
 
 <select multiple class="form-control" size="6" id="subdivision">
 <option value="Omaha">City of Omaha</option>
@@ -118,35 +112,26 @@ h1 { font-weight: bold; letter-spacing: -1px; }
 
 </div>
 
-<div class="col-md-6">
-
+<div class="row spacer">
 <textarea id="records" class="form-control" rows="5" placeholder="Describe the records you're looking for."></textarea>
-
 </div>
 
-</div>
-
-
-<div class="row" style="margin-top:20px;">
-
-<div class="col-xs-4">
+<div class="row spacer">
 <input type="text" id="name" class="form-control" placeholder="Your name ..." />
 </div>
 
+<div class="row spacer">
 <button type="button" class="btn btn-default" onclick="populate()">Beer me</button>
-
-<button type="button" class="btn btn-danger" onclick="reset()">Reset</button>	
+<button type="button" class="btn btn-primary" id="copier" style="display:none;" onclick="selectText('grabtext')">Select text</button>
+<button type="button" class="btn btn-danger" id="reseter" style="display:none;" onclick="reset()">Reset</button>	
+</div>
 
 </div>
 
-<div class="row">
-<div id="copier" class="col-md-6" style="display:none; margin:20px 0 20px 0">
-<button type="button" class="btn btn-primary btn-lg btn-block" onclick="selectText('grabtext')">Select text</button>
-</div>
+<div class="col-md-6" id="grabtext" style="display:none;"></div>
+
 </div>
 
-
-<div id="grabtext"></div>
 
 <script src="contact.js" type="text/javascript"></script>
 
@@ -186,9 +171,10 @@ if (govdata[i][0] == govmatch) {
 
 request = '<p>' + dt.value.replace(/\n/g, '</p>\n\n<p>').replace(/\n\n<p><\/p>/g, '') + '</p>'
 
-$('#grabtext').html('<p>' + apmonths[today.getMonth()] + ' ' + day + ', ' + year + '</p><p>' + '<a href="mailto:' + email + '">' + custodian + "</a>" + '<br/>' + title + ', ' + govt + '<br/>' + address + '<br/>' + phone + "</p><p>Pursuant to <a href='' target='_blank'>Neb. Rev. Stat. blah blah blah</a>, I hereby request the following records:</p><p>" + request + '</p><p>Thank you,<br/>' + getname + '</p>')
+$('#grabtext').html('<p>' + apmonths[today.getMonth()] + ' ' + day + ', ' + year + '</p><p>' + '<a href="mailto:' + email + '">' + custodian + "</a>" + '<br/>' + title + ', ' + govt + '<br/>' + address + '<br/>' + phone + "</p><p>Pursuant to <a href='' target='_blank'>Neb. Rev. Stat. blah blah blah</a>, I hereby request the following records:</p><p>" + request + '</p><p>Thank you,<br/>' + getname + '</p>').fadeIn('slow')
 
-$('#copier').show();
+$('#reseter').fadeIn('slow');
+$('#copier').fadeIn('slow');
 
 }
 
@@ -213,7 +199,8 @@ function selectText(element) {
 function reset() {
 $('body').find('input:text, select, textarea').val('');
 $('#grabtext').html('');
-$('#copier').hide();
+$('#copier').fadeOut('slow');
+$('#reseter').fadeOut('slow');
 }
 
 </script>
