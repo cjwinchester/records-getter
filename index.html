@@ -24,10 +24,11 @@
     img.logo { width: 75px; padding: 15px 0; }
     .rust { background: #de2d26; color: #fff; }
     .navbar-inverse .navbar-brand { color: #ccc; }
-div.jumbotron.image { margin-top: 2.3em; margin-bottom: 0; padding: 0; overflow: hidden; }
-div.jumbotron p.lead { color: #ccc; }
-h1 { font-weight: bold; letter-spacing: -1px; }
-.spacer { margin-top:15px;}
+    div.jumbotron.image { margin-top: 2.3em; margin-bottom: 0; padding: 0; overflow: hidden; }
+    div.jumbotron p.lead { color: #ccc; }
+    h1 { font-weight: bold; letter-spacing: -1px; }
+    .spacer { margin-top:15px;}
+    .small {font-size:70% }
 
     </style>
 
@@ -81,11 +82,27 @@ h1 { font-weight: bold; letter-spacing: -1px; }
 	
 	<div class="jumbotron rust">
     <div class="container">
-			<h1>Nebraska records request generator</h1>
-			<p class="lead">Lead-in text here</p>
+			<h1>Records request generator</h1>
+			<p class="lead">Making it easier to file open records requests with Omaha metro-area governments.<p>
+            
+            <div class="row">
+            
+            <div class="col-md-4">
+            <h2>Instructions</h2>
+            <p class="small">Fill out the form below and click the Submit button. Then select the text that appears and copy it into an email or letter. Any information you enter is generated entirely within your browser. Nothing is kept or shared with anyone.</p>
+            </div>
+            
+            <div class="col-md-4 col-md-offset-2">
+            <h2>Tips</h2>
+            <p class="small">Do your research. Make sure the information isn't already available elsewhere. Before filing a request, contact the agency to understand how the records are kept.</p>
+            </div>
+            
+            </div>
+            
+            
+            
 	</div>
 	</div>
-
 
 <div class="container" style="margin-bottom: 50px;">
 
@@ -114,7 +131,7 @@ h1 { font-weight: bold; letter-spacing: -1px; }
 </div>
 
 <div class="row spacer">
-<textarea id="records" class="form-control" rows="5" placeholder="Describe the records you're looking for. Be as specific as possible."></textarea>
+<textarea id="records" class="form-control" rows="5" placeholder="Describe the records you're looking for. Ex.: A copy of contract No. 1234 with Company Inc."></textarea>
 </div>
 
 <div class="row spacer">
@@ -122,14 +139,33 @@ h1 { font-weight: bold; letter-spacing: -1px; }
 </div>
 
 <div class="row spacer">
-<button type="button" class="btn btn-default" onclick="populate()">Beer me</button>
-<button type="button" class="btn btn-primary" id="copier" style="display:none;" onclick="selectText('grabtext')">Select text</button>
-<button type="button" class="btn btn-danger" id="reseter" style="display:none;" onclick="reset()">Reset</button>	
+<input type="text" id="addy" class="form-control" placeholder="Your address ..." />
 </div>
+
+<div class="row spacer">
+<input type="text" id="phone" class="form-control" placeholder="Your phone number ..." />
+</div>
+
+<div class="row spacer">
+<input type="text" id="email" class="form-control" placeholder="Your email address ..." />
+</div>
+
+<div class="row spacer">
+<button type="button" class="btn btn-default" onclick="populate()">Submit</button>
+<button type="button" class="btn btn-primary" id="copier" style="display:none;" onclick="selectText('grabtext'); $('#hint').fadeIn('slow')">Select text</button>
+<button type="button" class="btn btn-danger" id="reseter" style="display:none;" onclick="reset()">Reset</button>
+
+<p id="hint" style="float:right; display:none; font-weight:bold; margin-top:7px;">Press Ctrl + C to copy</p>
 
 </div>
 
+<div class="row" style="margin-bottom:25px;"></div>
+
+</div>
+
+<div class="row">
 <div class="col-md-6" id="grabtext" style="display:none;"></div>
+</div>
 
 </div>
 
@@ -156,6 +192,9 @@ else if
 else {
 
 var getname = $('#name').val();
+var getaddy = $('#addy').val();
+var getphone = $('#phone').val();
+var getemail = $('#email').val();
 var govt = $('#subdivision :selected').text();
 var govmatch = $('#subdivision :selected').val();
 var dt = document.getElementsByTagName("textarea")[0];
@@ -170,9 +209,9 @@ if (govdata[i][0] == govmatch) {
     }
 }
 
-request = '<p>' + dt.value.replace(/\n/g, '</p>\n\n<p>').replace(/\n\n<p><\/p>/g, '') + '</p>'
+var request = '<p>' + dt.value.replace(/\n/g, '</p>\n\n<p>').replace(/\n\n<p><\/p>/g, '') + '</p>'
 
-$('#grabtext').html('<p>' + apmonths[today.getMonth()] + ' ' + day + ', ' + year + '</p><p>' + custodian + '<br/>' + title + ', ' + govt + '<br/>' + address + '<br/>' + phone + "<br/>" + '<a href="mailto:' + email + '">' + email + "</a>" + "</p><p>Pursuant to <a href='http://uniweb.legislature.ne.gov/laws/statutes.php?statute=84-712' target='_blank'>Neb. Rev. Stat. 84-712 through 84-712.09</a>, I hereby request the following records:</p><p>" + request + '</p><p>Thank you,<br/>' + getname + '</p>').fadeIn('slow')
+$('#grabtext').html('<p>' + apmonths[today.getMonth()] + ' ' + day + ', ' + year + '</p><p>' + custodian + '<br/>' + title + ', ' + govt + '<br/>' + address + '<br/>' + phone + "<br/>" + '<a href="mailto:' + email + '">' + email + "</a>" + "</p><p>Pursuant to Neb. Rev. Stat. 84-712 through 84-712.09, I hereby request the following records:</p><p>" + request + '</p><p>If these records are kept electronically, I request that they be provided in their original format, per Neb. Rev. Stat. 84-712.01(1).</p><p>If my request is denied in whole or part, I ask that you justify all deletions by reference to specific exemptions in the open records act. I also expect you to release all segregable portions of otherwise exempt material.</p><p>I reserve the right to appeal your decision to withhold any information or to deny a waiver of fees.</p><p>Thank you,<br/>' + getname + '<br/>' + getaddy + '<br/>' + getphone + '<br/><a href="mailto:' + getemail + '">' + getemail + '</a></p>').fadeIn('slow')
 
 $('#reseter').fadeIn('slow');
 $('#copier').fadeIn('slow');
@@ -203,6 +242,14 @@ $('#grabtext').html('');
 $('#copier').fadeOut('slow');
 $('#reseter').fadeOut('slow');
 }
+
+function KeyPress(e) {
+    var evtobj = window.event? event : e
+    if (evtobj.keyCode == 67 && evtobj.ctrlKey) 
+    {$('#hint').html('Copied!').fadeOut('slow')};
+}
+
+document.onkeydown = KeyPress;
 
 </script>
 
