@@ -89,7 +89,7 @@
             
             <div class="col-md-4">
             <h2>Instructions</h2>
-            <p class="small">Fill out the form below and click the Submit button. Then select the text that appears and copy it into an email or letter. Any information you enter is generated entirely within your browser. Nothing is kept or shared with anyone.</p>
+            <p class="small">Fill out the form below and click <em>Submit</em>. Select the text that appears and copy it into an email or letter. Any information you enter is generated entirely within your browser. Nothing is kept or shared with anyone.</p>
             </div>
             
             <div class="col-md-4 col-md-offset-2">
@@ -152,7 +152,7 @@
 
 <div class="row spacer">
 <button type="button" class="btn btn-default" onclick="populate()">Submit</button>
-<button type="button" class="btn btn-primary" id="copier" style="display:none;" onclick="selectText('grabtext'); $('#hint').fadeIn('slow')">Select text</button>
+<button type="button" class="btn btn-primary" id="copier" style="display:none;" onclick="selectText('grabtext')">Select text</button>
 <button type="button" class="btn btn-danger" id="reseter" style="display:none;" onclick="reset()">Reset</button>
 
 <p id="hint" style="float:right; display:none; font-weight:bold; margin-top:7px;">Press Ctrl + C to copy</p>
@@ -234,6 +234,8 @@ function selectText(element) {
         selection.removeAllRanges();
         selection.addRange(range);
     }
+    $('#hint').html('Press Ctrl + C to copy');
+    $('#hint').fadeIn('slow');
 }
 
 function reset() {
@@ -241,6 +243,8 @@ $('body').find('input:text, select, textarea').val('');
 $('#grabtext').html('');
 $('#copier').fadeOut('slow');
 $('#reseter').fadeOut('slow');
+$('#hint').fadeOut('slow');
+$('#hint').html('Press Ctrl + C to copy');
 }
 
 function KeyPress(e) {
